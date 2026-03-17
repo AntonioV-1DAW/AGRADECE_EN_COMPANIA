@@ -1,0 +1,40 @@
+body{
+    background-image: url("./imagenes/fondo.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 77vh;
+}
+header{
+    align-content: center;
+    text-align: center;
+}
+.inicio{
+    text-align: center;
+}
+article{
+    margin: 0 auto;
+    background-color: rgb(188, 234, 255);
+    color: black;
+    width: 600px;
+    height: 300px;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 20px;
+    align-content: left;
+    text-align: left;
+}
+.campo {
+    width: 500px;
+    height: 25px;
+}
+
+.enviar{
+    background-color: rgb(46, 46, 255);
+    color: white;
+    width: 595px;
+    height: 40px;
+    align-content: center;
+    text-align: center;
+}
