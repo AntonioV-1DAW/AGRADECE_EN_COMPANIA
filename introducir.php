@@ -1,15 +1,35 @@
 <?php
-    session_start();
-    //Tenemos que conectar con la base de datos
-    include
-    $usuario=$_POST["usuario"];
-    $contrasena=$_["contrasena"];
+    function conectar(){
+        $conexion = new mysqli("localhost", "root", "", "alumnos");
+        return $conexion;
+    }
 
-    $sql='SELECT idAlumno FROM alumno where usuario="'.$usuario.'" AND contraseña="'.$contrasena.'";';
+    function iniciarSesion(){
+        session_start();
+        //Tenemos que conectar con la base de datos
+        $conexion=conectar();
+        $nombre=$_POST["nombre"];
+        $contrasena=$_POST["contrasena"];
+        //Consulta del query
+        $sql="SELECT idAlumno FROM alumnos where nombre='.$nombre.'AND contrasena='.$contrasena.'";
+        $resultado=$conexion->query($sql);
+        //Optener primera fila
+        $fila=$resultado->fetch_assoc();
 
-    echo $sql;
-
-    $resultado=$conexion->query($sql);
+        if($fila){
+            $_SESSION['nombre'] = $nombre;
+            echo "Inicio de sesión correcto";
+            header("./inicio.html");
+            exit();
+        } else {
+            echo "Usuario o contrasena incorrectos";
+        }
+        $conexion->close();
+    }
+    // Ejecutar la función si se envió el formulario
+    if($_POST){
+        iniciarSesion();
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,18 +52,18 @@
             <div>
                 <form action="introducir.php" method="POST">
                     <div>
-                        <label for="usuario">Usuario:</label><br>
-                        <input type="text" id="usuario" name="usuario" placeholder="Introduce tu usuario" class="campo" required><br><br>
+                        <label for="nombre">Usuario:</label><br>
+                        <input type="text" id="nombre" name="nombre" placeholder="Introduce tu usuario" class="campo" required><br><br>
 
                         <label for="nombre">Contraseña:</label><br>
                         <input type="password" id="contrasena" name="contrasena" placeholder="Introduce tu contraseña" class="campo" required><br>
                     </div>
                     <div>
                         <p>
-                            <input type="radio" id="recordarme" name="recordarme" value="recordarme" required>
+                            <input type="radio" id="recordarme" name="recordarme" value="recordarme">
                             <label for="recordarme">Recordarme</label>
                             <br>
-                            <div class="btnEnviar">Enviar</div>
+                            <input type="submit" value="Enviar" class="btnEnviar">Enviar</input>
                         </p>
                     </div>
                 </form>
