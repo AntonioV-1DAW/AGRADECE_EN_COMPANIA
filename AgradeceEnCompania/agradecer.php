@@ -1,15 +1,18 @@
 <?php
+    include'configdb.php';
+    
     function conectar(){
-        $conexion=new mysqli("localhost", "root", "", "alumnos");
+        $conexion=new mysqli(SERVIDOR, USUARIO, PASSWORD, BBDD);
         return $conexion;
     }
 
     function mostrarAlumnos($conexion){
+        $conexion=conectar();
         $sql="SELECT idAlumno, nombre FROM alumnos";
         $resultado=$conexion->query($sql);
 
         while($fila=$resultado->fetch_array()){
-            echo '<option  value="'.&fila['idAlumno'].'">';
+            echo '<option  value="'.$fila['idAlumno'].'">';
             echo $fila['idAlumno'].'-'.$fila['nombre'];
             echo '</option>';
         }
@@ -35,14 +38,9 @@
             <label for="alumnos" placeholder="Selecciona un alumno">Para: </label>
             <select name="alumnos" id="alumnos">
                 <?php
-                    //El en segundo option lo vamos a poner como sería para volverlo dinámico
-                    // en el cual el propio option cogera los valores guardados de la base de datos sobre los alumnos
-
-                    //En el value el idAlumno como bien dice su nombre el valor se cambiaria
-                    // al del id del alumno y el name se cambiaria al nombre del alumno respectivo del id
+                    $conexion=conectar();
+                    mostrarAlumnos($conexion);
                 ?>
-                <option value="1">Perez Maroto, Alejandro</option>
-                <option value="idAlumno">name</option>
             </select>
         </section>
     </body>
